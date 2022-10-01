@@ -32,4 +32,16 @@ function addNewLaunch(launch) {
   );
 }
 
-module.exports = { getAllLaunches, addNewLaunch };
+function deleteLaunch(id) {
+  let launch = [...launches.values()].filter(
+    (launch) => +launch.flightNumber === 100
+  )[0];
+  [...launches.values()].filter((launch) =>
+    console.log(launch.flightNumber, "ll")
+  );
+
+  if (launches.delete(+id)) return launch;
+  else return { error: "can't delete this launch" };
+}
+
+module.exports = { getAllLaunches, addNewLaunch, deleteLaunch };

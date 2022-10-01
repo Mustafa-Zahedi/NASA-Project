@@ -1,4 +1,8 @@
-const { getAllLaunches, addNewLaunch } = require("../../models/launches.model");
+const {
+  getAllLaunches,
+  addNewLaunch,
+  deleteLaunch,
+} = require("../../models/launches.model");
 
 function httpGetAllLaunches(req, res) {
   return res.status(200).json(getAllLaunches());
@@ -24,4 +28,8 @@ function httpAddNewLaunch(req, res) {
   return res.status(201).json(launch);
 }
 
-module.exports = { httpGetAllLaunches, httpAddNewLaunch };
+function httpDeleteLaunch(req, res) {
+  return res.status(200).json(deleteLaunch(req.params.id));
+}
+
+module.exports = { httpGetAllLaunches, httpAddNewLaunch, httpDeleteLaunch };
