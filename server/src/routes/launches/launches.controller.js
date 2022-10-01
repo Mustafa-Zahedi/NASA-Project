@@ -17,7 +17,7 @@ function httpAddNewLaunch(req, res) {
     !launch.rocket ||
     !launch.launchDate
   ) {
-    return res.status(400).json({ error: "Invalid inputs" });
+    return res.status(400).json({ error: "Missing required launch property" });
   }
 
   launch.launchDate = new Date(req.body.launchDate);
