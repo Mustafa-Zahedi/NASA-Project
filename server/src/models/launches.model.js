@@ -8,12 +8,16 @@ const launch = {
   rocket: "Explorer IS1",
   launchDate: new Date("September 30, 2025"),
   target: "Kepler-442 b",
-  customer: ["Z", "NASA"],
+  customers: ["Z", "NASA"],
   upcoming: true,
   success: true,
 };
 
 launches.set(launch.flightNumber, launch);
+
+function launchDoesExist(id) {
+  return launches.has(+id);
+}
 
 function getAllLaunches() {
   return Array.from(launches.values());
@@ -25,23 +29,22 @@ function addNewLaunch(launch) {
     latestFlightNumber,
     Object.assign(launch, {
       flightNumber: latestFlightNumber,
-      customer: ["Space X", "NASA"],
+      customers: ["Space X", "NASA"],
       upcoming: true,
       success: true,
     })
   );
 }
 
-function deleteLaunch(id) {
-  let launch = [...launches.values()].filter(
-    (launch) => +launch.flightNumber === 100
-  )[0];
-  [...launches.values()].filter((launch) =>
-    console.log(launch.flightNumber, "ll")
-  );
-
-  if (launches.delete(+id)) return launch;
-  else return { error: "can't delete this launch" };
+function abortLaunch(id) {
+  let aborted = launches.get(id);
+  (aborted.upcoming = false), (aborted.success = false);
+  return aborted;
 }
 
-module.exports = { getAllLaunches, addNewLaunch, deleteLaunch };
+module.exports = {
+  launchDoesExist,
+  getAllLaunches,
+  addNewLaunch,
+  abortLaunch,
+};

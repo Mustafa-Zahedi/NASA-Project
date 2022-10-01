@@ -1,7 +1,8 @@
 const {
   getAllLaunches,
   addNewLaunch,
-  deleteLaunch,
+  launchDoesExist,
+  abortLaunch,
 } = require("../../models/launches.model");
 
 function httpGetAllLaunches(req, res) {
@@ -28,8 +29,17 @@ function httpAddNewLaunch(req, res) {
   return res.status(201).json(launch);
 }
 
-function httpDeleteLaunch(req, res) {
-  return res.status(200).json(deleteLaunch(req.params.id));
+function httpAbortLaunch(req, res) {
+  const launchId = +req.params.id;
+
+  if (!launchDoesExist(launchId)) {
+    return res.status(404).json("launches not found!");
+  }
+  return res.status(200).json(abortLaunch(launchId));
 }
 
-module.exports = { httpGetAllLaunches, httpAddNewLaunch, httpDeleteLaunch };
+module.exports = {
+  httpGetAllLaunches,
+  httpAddNewLaunch,
+  httpAbortLaunch,
+};
