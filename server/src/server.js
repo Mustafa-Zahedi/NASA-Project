@@ -13,7 +13,7 @@ const server = http.createServer(app);
 
 (async function () {
   /* Connecting to the MongoDB database. */
-  await mongoConnect;
+  await mongoConnect();
 
   /* Loading the data from the JSON file into the database. */
   await loadPlanetData();
