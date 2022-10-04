@@ -5,11 +5,11 @@ const {
   abortLaunch,
 } = require("../../models/launches.model");
 
-function httpGetAllLaunches(req, res) {
-  return res.status(200).json(getAllLaunches());
+async function httpGetAllLaunches(_, res) {
+  return res.status(200).json(await getAllLaunches());
 }
 
-function httpAddNewLaunch(req, res) {
+async function httpAddNewLaunch(req, res) {
   let launch = req.body;
   if (
     !launch.mission ||
@@ -25,17 +25,21 @@ function httpAddNewLaunch(req, res) {
   if (isNaN(launch.launchDate))
     return res.status(400).json({ error: "Invalid Date" });
 
-  addNewLaunch(launch);
-  return res.status(201).json(launch);
+  const respons = await addNewLaunch(launch);
+  console.log("res..", respons);
+  if (respons) return res.status(201).json(launch);
+  else return res.status(400).json({ error: "planet doesn't exist!" });
 }
 
-function httpAbortLaunch(req, res) {
+async function httpAbortLaunch(req, res) {
   const launchId = +req.params.id;
 
-  if (!launchDoesExist(launchId)) {
+  if (!(await launchDoesExist(launchId))) {
     return res.status(404).json("launches not found!");
   }
-  return res.status(200).json(abortLaunch(launchId));
+  const aborted = await abortLaunch(launchId);
+  if (!aborted) return res.status(400).json({ error: "launch not aborted" });
+  return res.status(200).json({ ok: true });
 }
 
 module.exports = {
