@@ -3,6 +3,7 @@ const http = require("http");
 const app = require("./app");
 const { mongoConnect } = require("../services/mongo");
 const { loadPlanetData } = require("./models/planets.model");
+const { laodLaunchesData } = require("./models/launches.model");
 
 /* Setting the port number to the environment variable PORT or 8000 if the environment variable is not
 set. */
@@ -15,6 +16,8 @@ const server = http.createServer(app);
   /* Connecting to the MongoDB database. */
   await mongoConnect();
 
+  /* Loading the data from the JSON file into the database. */
+  await laodLaunchesData();
   /* Loading the data from the JSON file into the database. */
   await loadPlanetData();
 
