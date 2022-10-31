@@ -6,7 +6,7 @@
   "scripts": {
     "install-server": "npm install --prefix server",
     "install-client": "npm install --prefix client",
-    "install": "npm install concurrently && npm run install-server && npm run install-client",
+    "install": "npm run install-server && npm run install-client",
     "server": "npm run watch --prefix server",
     "client": "npm start --prefix client",
     "watch": "concurrently --kill-others \"npm run server\" \"npm run client\"",
@@ -25,6 +25,6 @@
   },
   "homepage": "https://github.com/Mustafa-Zahedi/NASA-Project#readme",
   "dependencies": {
-    "concurrently": "^7.4.0"
+    "concurrently": "^7.5.0"
   }
 }
